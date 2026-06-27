@@ -1,3 +1,9 @@
+# ⚠️ Experimental - do not install
+
+**This is experimental and not production-ready. It should not be installed on a production OpenCloud instance.**
+
+---
+
 # opencloud-apps
 
 A tiny drop-in mechanism for adding apps (web extension + backend) to an
