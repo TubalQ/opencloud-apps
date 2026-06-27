@@ -1,0 +1,39 @@
+# Calendar app overlay. Paths are relative to the opencloud-compose project root;
+# this app's files live under apps-enabled/calendar/ once enabled.
+services:
+  opencloud:
+    volumes:
+      - ./apps-enabled/calendar/web/calendar:/var/lib/opencloud/web/assets/apps/calendar:ro
+
+  radicale:
+    image: ${RADICALE_DOCKER_IMAGE:-opencloudeu/radicale}:${RADICALE_DOCKER_TAG:-latest}
+    user: ${OC_CONTAINER_UID_GID:-1000:1000}
+    networks:
+      - opencloud-net
+    volumes:
+      - ./apps-enabled/calendar/config/radicale/config:/etc/radicale/config
+      - radicale-data:/var/lib/radicale
+    restart: always
+    logging:
+      driver: ${LOG_DRIVER:-local}
+
+  oc-calendar-bridge:
+    image: ${CALENDAR_BRIDGE_IMAGE:-ghcr.io/tubalq/oc-calendar-bridge:latest}
+    user: ${OC_CONTAINER_UID_GID:-1000:1000}
+    networks:
+      - opencloud-net
+    command:
+      - -addr=0.0.0.0:8080
+      - -api-prefix=/calendar-bridge
+      - -feed-prefix=/cal
+      - -radicale=http://radicale:5232
+      - -state-dir=/state
+    volumes:
+      - calendar-bridge-state:/state
+    restart: always
+    logging:
+      driver: ${LOG_DRIVER:-local}
+
+volumes:
+  radicale-data:
+  calendar-bridge-state:

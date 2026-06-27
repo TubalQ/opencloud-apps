@@ -1,0 +1,7 @@
+# Mounts the assembled proxy routes into OpenCloud. Included once by assemble.sh
+# regardless of how many apps are enabled. OpenCloud reads /etc/opencloud/proxy.yaml
+# by default, so no env var is needed.
+services:
+  opencloud:
+    volumes:
+      - ./config/opencloud/proxy.yaml:/etc/opencloud/proxy.yaml

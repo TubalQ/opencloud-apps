@@ -1,0 +1,6 @@
+# video app overlay (a file viewer; no backend and no proxy route, just the web
+# extension). Path is relative to the opencloud-compose project root.
+services:
+  opencloud:
+    volumes:
+      - ./apps-enabled/video/web/video:/var/lib/opencloud/web/assets/apps/video:ro

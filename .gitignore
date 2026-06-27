@@ -1,0 +1,7 @@
+# operator state + generated artifacts
+/apps-enabled/*
+!/apps-enabled/.gitkeep
+/config/opencloud/proxy.yaml
+/apps-up.sh
+# built web bundles dropped into apps
+apps-available/*/web/*/

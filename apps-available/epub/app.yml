@@ -1,0 +1,6 @@
+# epub app overlay (a file viewer; no backend and no proxy route, just the web
+# extension). Path is relative to the opencloud-compose project root.
+services:
+  opencloud:
+    volumes:
+      - ./apps-enabled/epub/web/epub:/var/lib/opencloud/web/assets/apps/epub:ro

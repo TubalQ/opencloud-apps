@@ -1,0 +1,27 @@
+# Import-from-URL app overlay. Paths are relative to the opencloud-compose project
+# root; this app's files live under apps-enabled/url-fetch/ once enabled.
+# Set OC_DOMAIN in your environment (your OpenCloud public host).
+services:
+  opencloud:
+    volumes:
+      - ./apps-enabled/url-fetch/web/url-fetch:/var/lib/opencloud/web/assets/apps/url-fetch:ro
+
+  oc-url-fetch:
+    image: ${URL_FETCH_IMAGE:-ghcr.io/tubalq/oc-url-fetch:latest}
+    user: ${OC_CONTAINER_UID_GID:-1000:1000}
+    networks:
+      - opencloud-net
+    command:
+      - -addr=0.0.0.0:8080
+      - -base-path=/url-fetch
+      - -host=${OC_DOMAIN:?set OC_DOMAIN to your OpenCloud public host}
+      - -opencloud=http://opencloud:9200
+      - -tmpdir=/spool
+    volumes:
+      - url-fetch-spool:/spool
+    restart: always
+    logging:
+      driver: ${LOG_DRIVER:-local}
+
+volumes:
+  url-fetch-spool:

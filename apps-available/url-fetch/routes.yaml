@@ -1,0 +1,5 @@
+# Proxy route for the Import-from-URL app - a bare list, merged by assemble.sh.
+- endpoint: /url-fetch/
+  backend: http://oc-url-fetch:8080
+  unprotected: true
+  skip_x_access_token: true

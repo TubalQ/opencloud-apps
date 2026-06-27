@@ -1,0 +1,28 @@
+# Minimal Radicale config for use behind the OpenCloud proxy.
+# The proxy authenticates the user and forwards the identity in X-Remote-User,
+# so Radicale trusts that header (no passwords stored here).
+
+[server]
+hosts = 0.0.0.0:5232
+
+[auth]
+# Trust the X-Remote-User header injected by the OpenCloud proxy.
+type = http_x_remote_user
+
+[web]
+# No Radicale web UI; access is through the Calendar app.
+type = none
+
+[storage]
+# Create a default calendar (VEVENT/VJOURNAL/VTODO) and address book per user.
+predefined_collections = {
+    "def-addressbook": {
+       "D:displayname": "Personal Address Book",
+       "tag": "VADDRESSBOOK"
+    },
+    "def-calendar": {
+       "C:supported-calendar-component-set": "VEVENT,VJOURNAL,VTODO",
+       "D:displayname": "Personal Calendar",
+       "tag": "VCALENDAR"
+    }
+  }
